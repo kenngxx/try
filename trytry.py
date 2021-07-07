@@ -1,15 +1,29 @@
+import os
+import warnings
 import requests
 import lxml.html as lh
 import pandas as pd
 import streamlit as st
 import yfinance as yf
-from bs4 import BeautifulSoup
-
-from plotly.subplots import make_subplots
+import math
 import numpy as np
 import datetime as dt
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+from pylab import rcParams
+from bs4 import BeautifulSoup
+from plotly.subplots import make_subplots
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.arima_model import ARIMA
+from pmdarima.arima import auto_arima
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
+
+
+rcParams['figure.figsize'] = 10, 6
+plt.style.use('fivethirtyeight')
+warnings.filterwarnings('ignore')
 
 
 st.set_page_config(
@@ -33,7 +47,7 @@ def load_quotes(asset):
     return yf.download(asset)
 
 
-menu = ['Overview', 'News', 'Technical Indicators', 'Company Profile', 'About']
+menu = ['Overview', 'Prediction', 'News', 'Technical Indicators', 'Company Profile', 'About']
 query_params = st.experimental_get_query_params()
 default = int(query_params["menubar"][0]) if "menubar" in query_params else 0
 menubar = st.selectbox(
@@ -339,6 +353,33 @@ if menubar == 'Overview':
             with chart3q:
                 st.markdown(subMetaq)
         st.text(" ")
+
+
+elif menubar == 'Prediction':
+    # plot close price
+    intervalList = ["1m", "5m", "15m", "30m"]
+    interval_candle = st.selectbox(
+        'Interval in minutes',
+        intervalList,
+    )
+    dayList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+               16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+    chartdays = st.selectbox(
+        'No. of Days',
+        dayList,
+    )
+    stock = yf.Ticker(asset)
+    history_data = stock.history(interval=interval_candle, period=str(chartdays) + "d")
+    prices = history_data['Close']
+    volumes = history_data['Volume']
+    plt.figure(figsize=(10, 6))
+    plt.grid(True)
+    plt.xlabel('Dates')
+    plt.ylabel('Close Prices')
+    plt.plot(prices)
+    plt.title('Altaba Inc. closing price')
+    plt.show()
+
 elif menubar == 'News':
     if "page" not in st.session_state:
         st.session_state.page = 0
