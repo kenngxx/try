@@ -4,10 +4,11 @@ import pandas as pd
 import streamlit as st
 import yfinance as yf
 from bs4 import BeautifulSoup
-import plotly.graph_objects as go
+
 from plotly.subplots import make_subplots
 import numpy as np
 import datetime as dt
+import plotly.graph_objects as go
 
 
 
@@ -648,7 +649,7 @@ elif menubar == 'About':
                 f"<p style='text-align: center;font-weight: bold; color: #FFFFFF;font-size: 30px;'>{dev3}</p>",
                 unsafe_allow_html=True)
             st.markdown(
-                f"<p style='text-align: center; color: #FFFFFF;font-size: 20px;'>{dev_email}</p>",
+                f"<p style='text-align: center; color: #FFFFFF;font-size: 20px;'>{dev31}</p>",
                 unsafe_allow_html=True)
             dev_email = "(" + dev_email + ")"
             aye = '[contact.email@dlsud.edu.ph]' + dev_email
