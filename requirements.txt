@@ -1,13 +1,9 @@
-pandas
-requests
-statsmodels
-pmdarima
-bs4
-beautifulsoup4
-lxml
-yfinance
-streamlit
-plotly
-numpy
-sklearn
-matplotlib
+pandas == 1.2.4
+requests == 2.25.1
+bs4 == 0.0.1
+beautifulsoup4 == 4.9.3
+lxml == 4.6.3
+yfinance == 0.1.59
+streamlit == 0.84.0
+plotly == 4.14.3
+numpy == 1.20.2
