@@ -10,6 +10,5 @@ numpy == 1.20.2
 yahooquery
 matplotlib
 statsmodels
-pylab
 pmdarima
 sklearn
